@@ -25,12 +25,15 @@ class SkiPostContainer extends Component {
 	}
 	async getSkiPosts() {
 		const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/resort-posts`, {
-			credentials: 'include'
-		})
+			credentials: 'include',
+			headers: {
+					'Content-Type': 'application/json'
+			}
+	})
+
 		console.log(response, "<----- fetch response")
 
 		const parsedSkiPosts = await response.json();
-		console.log(parsedSkiPosts, "<----- parsedSkiPosts")
 		this.setState({
 			skiPosts: parsedSkiPosts.posts
 		})

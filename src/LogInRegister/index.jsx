@@ -25,7 +25,8 @@ class LogInRegister extends Component {
 		e.preventDefault();
 
 		try {
-			const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/users/${this.state.which}`, {
+
+			const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS_LOGIN}/${this.state.which}`, {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify({
