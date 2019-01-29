@@ -3,25 +3,24 @@ import { Card, Button } from 'semantic-ui-react'
 
 
 
-
 const SkiPostList = (props) => {
 
-	 const skiPost = props.skiPosts.map((post, i) => {
+	const allPosts = props.skiPosts.map((post, i) => {
     return (
       <Card key={i}>
         <Card.Content>
 	          <Card.Header>
-	          	{skiPost.resortg}
+	          	{post.resort}
 	      	  </Card.Header>
 	          <Card.Description>
-	          	{skiPost.body}
+	          	{post.body}
 	      	  </Card.Description>	
 	    </Card.Content>
 	    <Card.Content extra>
-	          <Button color="green" onClick={props.openAndEdit.bind(null, skiPost)}>
+	          <Button color="green" onClick={props.openAndEdit.bind(null, post)}>
 	          	Edit post
 	          </Button>
-	          <Button color="red" onClick={props.deleteSkiPost.bind(null, skiPost.id)}>
+	          <Button color="red" onClick={props.deleteSkiPost.bind(null, post.id)}>
 	          	Delete Post
 	          </Button>
         </Card.Content>
@@ -33,7 +32,7 @@ const SkiPostList = (props) => {
     <div>
       <h3>Resort Updates:</h3>
       <Card.Group className="centered">
-        {skiPost}
+        {allPosts}
       </Card.Group>
     </div>
     )
@@ -43,3 +42,5 @@ const SkiPostList = (props) => {
 
 
 export default SkiPostList;
+
+

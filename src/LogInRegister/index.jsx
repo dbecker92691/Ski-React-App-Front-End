@@ -40,6 +40,8 @@ class LogInRegister extends Component {
 
 			const parsed = await response.json();
 
+			console.log(parsed, "parsed login")
+
 			if (parsed.status === 200) {
 				this.props.LogIn(parsed.logged_in_as)
 			} else {

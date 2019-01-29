@@ -9,6 +9,7 @@ import EditSkiPost from './EditSkiPost/EditSkiPost';
 
 
 
+
 class SkiPostContainer extends Component {
 	constructor(){
 		super();
@@ -24,19 +25,25 @@ class SkiPostContainer extends Component {
 		}
 	}
 	async getSkiPosts() {
-		const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/resort-posts`, {
+		const response = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS_SKI_POST}/resort-posts/`, {
+			method: 'GET',
 			credentials: 'include',
 			headers: {
-					'Content-Type': 'application/json'
+				'Content-Type': 'application/json'
 			}
 	})
 
 		console.log(response, "<----- fetch response")
 
-		const parsedSkiPosts = await response.json();
+		const parsedSkiPosts = response.json();
+
+		console.log(parsedSkiPosts.posts, "<----- parsed ski posts dot posts")
+
 		this.setState({
 			skiPosts: parsedSkiPosts.posts
 		})
+
+		console.log(this.state, "<--- this dot state ")
 	}
 
 	componentDidMount() {
@@ -49,8 +56,8 @@ class SkiPostContainer extends Component {
 		e.preventDefault();
 
 		console.log(skiPost, "<----- ski post")
-
-		const createdSkiPost = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/resort-posts/`, {
+		const createdSkiPost = await fetch('http://localhost:9292/api/resort-posts/', {
+		//const createdSkiPost = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/resort-posts/`, {
 			method: "POST",
 			credentials: "include",
 			body: JSON.stringify(skiPost),
@@ -78,7 +85,7 @@ class SkiPostContainer extends Component {
 
 	deleteSkiPost = async (id) => {
 
-		await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/resort-posts/${id}`, {
+		await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS_SKI_POST}/resort-posts/${id}`, {
 			method: "DELETE",
 			credentials: 'include'
 		})
@@ -117,7 +124,7 @@ class SkiPostContainer extends Component {
 
 		try {
 
-			const editPostResponse = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/resort-posts/${this.state.skiPostToEdit.id}`, {
+			const editPostResponse = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS_SKI_POST}/resort-posts/${this.state.skiPostToEdit.id}`, {
 				method: 'PUT',
 				credentials: 'include',
 				body: JSON.stringify({
@@ -148,7 +155,7 @@ class SkiPostContainer extends Component {
 
 		e.preventDefault();
 
-		const logoutResponse = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS}/users/logout`)
+		const logoutResponse = await fetch(`${process.env.REACT_APP_BACKEND_ADDRESS_LOGIN}/logout`)
 
 		//const parsedLogoutResponse = logoutResponse.json();
 
@@ -160,7 +167,11 @@ class SkiPostContainer extends Component {
 
 
 
+
 	render(){
+
+		const showTrafficMap = this.state.showTrafficMap;
+
 		return(
 			<div>
 				<div className='NavButtons'>
@@ -171,8 +182,8 @@ class SkiPostContainer extends Component {
 					    <Button color="green" href='../MyPostsContainer'>
 						    	My Posts
 					    </Button>
-					    <Button color="blue" href='../SkiMapContainer'>
-						    	Ski Map
+					    <Button color="blue" onClick={this.props.showTrafficMap}>
+						    	Traffic Map
 					    </Button>
 					 </Button.Group>
 				</div> <br/>
@@ -182,15 +193,13 @@ class SkiPostContainer extends Component {
 				            <Grid.Column>
 					            <CreateSkiPost addSkiPost={this.addSkiPost} />
 					        </Grid.Column>
-
 					        <Grid.Column>
-					            <SkiPostList skiPosts={this.state.skiPosts} deleteSkiPost={this.deleteSkiPost} openAndEdit={this.openAndEdit}/>
+					            
 				            </Grid.Column>
 				          <EditSkiPost open={this.state.showEditModal} skiPostToEdit={this.state.skiPostToEdit} handleEditChange={this.handleEditChange} closeAndEdit={this.closeAndEdit}/>
 				        </Grid.Row>
 			        </Grid>
-				</div>
-
+			     </div>  
 			</div>
 
 		)
@@ -198,3 +207,8 @@ class SkiPostContainer extends Component {
 }
 
 export default SkiPostContainer; 
+
+
+
+
+//<SkiPostList skiPosts={this.state.skiPosts} deleteSkiPost={this.deleteSkiPost} openAndEdit={this.openAndEdit}/>
