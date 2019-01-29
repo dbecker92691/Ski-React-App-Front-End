@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import CurrentMap from './CurrentMap'
 
 
 
@@ -48,7 +48,7 @@ class SkiTrafficContainer extends Component {
 
 		return(
 			<div>
-					<h1> A whole bunch of ski traffic </h1>
+				<CurrentMap />
 			</div>
 		)
 	}
