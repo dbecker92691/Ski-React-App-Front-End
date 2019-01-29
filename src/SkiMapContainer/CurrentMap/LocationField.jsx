@@ -23,7 +23,7 @@ class LocationField extends Component {
           }
         }
 
-        onSuggestSelect = async (place: Suggest) => {
+        onSuggestSelectStart = async (place: Suggest) => {
           
           try {
             this.setState(prevState => ({
@@ -34,16 +34,25 @@ class LocationField extends Component {
               }
             }))
 
+            console.log(this.state, "<---- this . state start")
+          } catch(err) {
+            console.log(err, "<----- lat lng error")
+          }
+
+        };
+
+        onSuggestSelectFinish = async (place: Suggest) => {
+          
+          try {
             this.setState(prevState => ({
               finish: {
                 ...prevState.finish,
                 lat: place.location.lat,
                 lng: place.location.lng
-
               }
             }))
 
-            console.log(this.state, "<---- this . state start/finish")
+            console.log(this.state, "<---- this . state finish")
           } catch(err) {
             console.log(err, "<----- lat lng error")
           }
@@ -55,14 +64,26 @@ class LocationField extends Component {
     //   form: { values } // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
     // } = this.props;
 
+
     return (
       <div>
-        <Geosuggest
-          placeholder="Start typing!"
-          onSuggestSelect={this.onSuggestSelect}
-          location={new google.maps.LatLng(53.558572, 9.9278215)}
-          radius={20}
-        />
+
+        <div className='start'>
+          <Geosuggest
+            placeholder="start"
+            onSuggestSelect={this.onSuggestSelectStart}
+            location={new google.maps.LatLng(53.558572, 9.9278215)}
+            radius={20}
+          />
+        </div>
+          <div className='finish'>
+           <Geosuggest
+            placeholder="finish"
+            onSuggestSelect={this.onSuggestSelectFinish}
+            location={new google.maps.LatLng(53.558572, 9.9278215)}
+            radius={20}
+          />
+        </div>
 
       </div>
 
